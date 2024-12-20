@@ -1,0 +1,30 @@
+.gradient-card {
+    background: linear-gradient(135deg, #1168cb, #ff00a6); /* Purple to blue gradient */
+    color: #fff; /* White text for contrast */
+}
+
+.taskSection {
+    background: url('./img/desktop-wallpaper-4-xperia-z2.jpg') no-repeat center center/cover;
+    padding: 50px 0;
+    min-height: 100vh;
+    /* Ensure text is visible */
+}
+
+
+.snackbar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #5e4f5c, #214244); 
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(255, 105, 248, 0.406);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.snackbar.show {
+    opacity: 1;
+}
