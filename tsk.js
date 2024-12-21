@@ -12,78 +12,75 @@ let editTask = null;
 function renderTask() {
     tasklistType.innerHTML = ""; // Clear the task list
 
-    task.forEach((item, index) => {
-        // Create a div for the task item
-        const taskItem = document.createElement("div");
-        taskItem.className = 
+   // Iterate through each task
+task.forEach((item, index) => {
+    // Create a container div for the task item
+    const taskItem = document.createElement("div");
+    taskItem.className =
         "text-bg-light d-flex justify-content-between align-items-center mt-3 border border-info p-2 rounded";
-        
 
-        // Create a span to hold the task text
-        const taskText = document.createElement("div");
-        taskText.className="form-check";
-        
-        const buildInput =document.createElement("input");
-        buildInput.className="text-bg-white border border-primary form-check-input" ;
-        buildInput.type="checkbox";
+    // Create a container for the checkbox and task text
+    const taskTextContainer = document.createElement("div");
+    taskTextContainer.className = "form-check";
 
-        const buildLabel = document.createElement("label");
-        buildLabel.className="form-check-label";
-        buildLabel.textContent = item;
-       
+    // Create a checkbox
+    const checkbox = document.createElement("input");
+    checkbox.className = "form-check-input text-bg-white border border-primary";
+    checkbox.type = "checkbox";
+    checkbox.addEventListener("change", () => toggleCompletion(index));
 
-        // Create a div for action buttons
-        const action = document.createElement("div");
+    // Create a label for the task text
+    const taskLabel = document.createElement("label");
+    taskLabel.className = "form-check-label";
+    taskLabel.textContent = item;
 
-        // Create an edit button
-        const editButton = document.createElement("button");
-        editButton.className = "btn btn-outline-success btn-sm rounded-pill px-3 shadow-sm me-2";
-        editButton.textContent = "Edit";
-        editButton.onclick = () => handleEdit(index);
+    // Append checkbox and label to the task text container
+    taskTextContainer.appendChild(checkbox);
+    taskTextContainer.appendChild(taskLabel);
 
-        // Create a delete button
-        const deleteButton = document.createElement("button");
-        deleteButton.className = "btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm me-2";
-        deleteButton.textContent = "Delete";
-        deleteButton. onclick = () => handleDelete(index);
+    // Create a container for action buttons
+    const actionContainer = document.createElement("div");
 
-        // Append buttons to the action div
-        action.appendChild(editButton);
-        action.appendChild(deleteButton);
+    // Create the Edit button
+    const editButton = document.createElement("button");
+    editButton.className = "btn btn-outline-success btn-sm rounded-pill px-3 shadow-sm me-2";
+    editButton.textContent = "Edit";
+    editButton.onclick = () => handleEdit(index);
 
-        // Append text ,checkbox to the action div
-        taskText.appendChild(buildInput);
-        taskText.appendChild(buildLabel );
+    // Create the Delete button
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm me-2";
+    deleteButton.textContent = "Delete";
+    deleteButton.onclick = () => handleDelete(index);
 
+    // Append buttons to the action container
+    actionContainer.appendChild(editButton);
+    actionContainer.appendChild(deleteButton);
 
+    // Append the task text container and action container to the task item container
+    taskItem.appendChild(taskTextContainer);
+    taskItem.appendChild(actionContainer);
 
-        // Append task text and actions to the task item
-        taskItem.appendChild(taskText);
-        taskItem.appendChild(action);
-
-        // Add the task item to the task list
-        tasklistType.appendChild(taskItem);
-
-        // Add event listener to checkbox
-            buildInput.addEventListener("change", function () {
-                if (buildInput.checked) {
-                    buildLabel.style.textDecoration = "line-through"; // Cross out the text
-                    showSnackbar("Task completed successfully!");
-                } else {
-                    buildLabel.style.textDecoration = "none"; // Remove the line-through
-                }
-            });
-
-            // Append the container to your desired parent element (e.g., a list)
-            document.getElementById("taskList").appendChild(taskText);
-
-
-       
-
-    });
+    // Add the task item container to the task list
+    tasklistType.appendChild(taskItem);
+});
 
 
 
+
+}
+
+// Toggle completion state of a task
+function toggleCompletion(index) {
+    const taskText = tasklistType.children[index].querySelector(".form-check-label");
+
+    if (tasklistType.children[index].querySelector("input").checked) {
+        taskText.style.textDecoration = "line-through"; // Cross out the task
+        showSnackbar("Task Completed successfully!");  // Show snackbar
+    } else {
+        taskText.style.textDecoration = "none"; // Remove cross out
+         // Show snackbar
+    }
 }
 
 
